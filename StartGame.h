@@ -1,0 +1,189 @@
+
+#pragma once
+#include "MainMenu.h"
+#include "src/WinMain.h"
+#include <iostream>
+#include <thread>
+#include <chrono>
+#include <cmath>
+
+#include "StageData.h"
+
+extern MainMenu mainmenu;
+bool bisGame = false;
+
+class StartGame //class can act as a script object
+{
+public:
+	
+class Player
+{
+public:
+	float bx = 0, by = 0; //data members
+	const int basespeed = 1;
+	float spawnx = WINDOW_W /2, spawny = WINDOW_H / 2 + 250; //data members
+
+	//Player(float xpos, float ypos) : x(xpos), y(ypos) {} //Constructor
+
+	void Move(int ax, int ay)
+	{
+		
+		bx += ax * basespeed;
+		by += ay * basespeed;
+		//printf("Move Function Called");
+	}
+	
+	
+
+	void PlayerControl()
+	{
+		bool keyLeft = CheckHitKey(KEY_INPUT_LEFT);
+		bool keyRight = CheckHitKey(KEY_INPUT_RIGHT);
+		bool keyUp = CheckHitKey(KEY_INPUT_UP);
+		bool keyDown = CheckHitKey(KEY_INPUT_DOWN);
+		bool keySpace = IsKeyOn(KEY_INPUT_SPACE);
+		//TODO Change to WASD
+
+		//auto x = 1;
+		//auto y = 1.1;
+		
+		
+		
+		if (keySpace == TRUE)
+		{
+			printf("%d", bisGame);
+
+
+			//toggle
+			/*if(btest ==true)
+			{
+			btest = false;
+			printf("BOOL = %d ",btest);
+			}
+			else if (btest ==false)
+			{
+				btest = true;
+				printf("BOOL = %d ", btest);
+			}*/
+		}
+		if (keyLeft == TRUE && bisGame == true)
+		{
+			Move(-1, 0);
+			printf("Left");
+		}
+
+		if (keyRight == TRUE && bisGame == true)
+		{
+			Move(1, 0);
+			printf("Right");
+		}
+
+		if (keyUp == TRUE&& bisGame == true)
+		{
+			Move(0, -1);
+			printf("Up");
+		}
+
+		if (keyDown == TRUE && bisGame == true)
+		{
+			Move(0, 1);
+			printf("Down");
+		}
+		if (IsMouseRepeat(MOUSE_INPUT_LEFT)) //gets a mouse click
+		{
+			//pos_x = GetMouseX();
+			//pos_y = GetMouseY();
+		}
+		//if (isKeyOn(KEY_INPUT_SPACE))
+		//if (IsMouseOn(MOUSE_INPUT_LEFT)) //gets a mouse click
+		//if (isKeyRepeat(KEY_INPUT_SPACE))
+	}
+
+	
+
+
+
+private:
+	bool btest = false;
+
+	
+};
+//END OF PLAYER CLASS
+
+
+
+
+
+void DrawArena(StageData& stagedata)
+{
+	//printf("%d", this->xa);
+	stagedata.loadStage1(stagedata);
+	
+	// if succeed loadStage2();
+}
+
+bool bSpawned = false;
+
+void SetPlayerSpawn(Player& player)
+{
+	
+	//get a Spawn Pos and set it to the player ONCE
+	if (bSpawned == false)
+	{
+		player.bx = player.spawnx;
+		player.by = player.spawny;
+		//printf("%f", player.bx);
+		//printf("%f", player.by);
+		bSpawned = true;
+	}
+
+}
+
+void DrawPlayer(Player& player, StageData stagedata)
+{
+	if (mainmenu.bMainMenu == false)
+	{ 
+	SetPlayerSpawn(player);
+	DrawCircleAA(player.bx, player.by, 27, 60, BLACK, 1, 0);
+	DrawCircleAA(player.bx, player.by, 25, 60, YELLOW, 1, 0);
+	CheckPlayerBoundary(player, stagedata);
+	}
+	//printf("%d", player.bx);
+	//printf("%d", player.by);
+}
+
+
+
+void SpawnEnemy(StageData stagedata)
+{
+
+}
+
+void CheckPlayerBoundary(Player& player, StageData& stagedata)
+{
+	//pythagorean formula
+	double distance = sqrt(pow(player.bx - stagedata.arenax, 2) + pow(player.by - stagedata.arenay, 2));
+	if (distance > stagedata.rad) 
+	{ 
+		//printf(" dist %d ",distance);
+		exit(0);
+	}
+}
+
+
+void StartStage(StageData& stagedata)
+{
+	if (mainmenu.bMainMenu == false)
+	{
+	
+		bisGame = true;
+		DrawArena(stagedata);
+		
+		//SpawnEnemy(stageData);
+	}
+
+}
+
+
+
+};

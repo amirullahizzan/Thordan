@@ -9,18 +9,21 @@
 
 #include "StageData.h"
 
+	bool bisGame = false;
+
 extern MainMenu mainmenu;
-bool bisGame = false;
 
 class StartGame //class can act as a script object
 {
 public:
 	
-class Player
+struct Player
 {
 public:
-	float bx = 0, by = 0; //data members
+	int hp = 0;
+	float bx = 255, by = 255; //data members
 	const int basespeed = 1;
+	float rad = 25;
 	float spawnx = WINDOW_W /2, spawny = WINDOW_H / 2 + 250; //data members
 
 	//Player(float xpos, float ypos) : x(xpos), y(ypos) {} //Constructor
@@ -105,7 +108,6 @@ public:
 
 private:
 	bool btest = false;
-
 	
 };
 //END OF PLAYER CLASS
@@ -144,8 +146,8 @@ void DrawPlayer(Player& player, StageData stagedata)
 	if (mainmenu.bMainMenu == false)
 	{ 
 	SetPlayerSpawn(player);
-	DrawCircleAA(player.bx, player.by, 27, 60, BLACK, 1, 0);
-	DrawCircleAA(player.bx, player.by, 25, 60, YELLOW, 1, 0);
+	DrawCircle(player.bx, player.by, player.rad+3, BLACK, 1, 1);
+	DrawCircle(player.bx, player.by, player.rad, YELLOW, 1, 1);
 	CheckPlayerBoundary(player, stagedata);
 	}
 	//printf("%d", player.bx);

@@ -1,5 +1,4 @@
 
-#pragma once
 #include "MainMenu.h"
 #include "src/WinMain.h"
 #include <iostream>
@@ -9,7 +8,8 @@
 
 #include "StageData.h"
 
-	bool bisGame = false;
+	bool isGame = false;
+	bool isMainMenu = false;
 
 extern MainMenu mainmenu;
 
@@ -54,7 +54,7 @@ public:
 		
 		if (keySpace == TRUE)
 		{
-			printf("%d", bisGame);
+			printf("%d", isGame);
 
 
 			//toggle
@@ -69,25 +69,25 @@ public:
 				printf("BOOL = %d ", btest);
 			}*/
 		}
-		if (keyLeft == TRUE && bisGame == true)
+		if (keyLeft == TRUE && isGame == true)
 		{
 			Move(-1, 0);
 			printf("Left");
 		}
 
-		if (keyRight == TRUE && bisGame == true)
+		if (keyRight == TRUE && isGame == true)
 		{
 			Move(1, 0);
 			printf("Right");
 		}
 
-		if (keyUp == TRUE&& bisGame == true)
+		if (keyUp == TRUE&& isGame == true)
 		{
 			Move(0, -1);
 			printf("Up");
 		}
 
-		if (keyDown == TRUE && bisGame == true)
+		if (keyDown == TRUE && isGame == true)
 		{
 			Move(0, 1);
 			printf("Down");
@@ -143,7 +143,7 @@ void SetPlayerSpawn(Player& player)
 
 void DrawPlayer(Player& player, StageData stagedata)
 {
-	if (mainmenu.bMainMenu == false)
+	if (mainmenu.isMainmenu == false)
 	{ 
 	SetPlayerSpawn(player);
 	DrawCircle(player.bx, player.by, player.rad+3, BLACK, 1, 1);
@@ -175,10 +175,10 @@ void CheckPlayerBoundary(Player& player, StageData& stagedata)
 
 void StartStage(StageData& stagedata)
 {
-	if (mainmenu.bMainMenu == false)
+	if (mainmenu.isMainmenu == false)
 	{
 	
-		bisGame = true;
+		isGame = true;
 		DrawArena(stagedata);
 		
 		//SpawnEnemy(stageData);

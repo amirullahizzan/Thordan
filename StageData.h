@@ -35,7 +35,7 @@ public:
 			int AOEDelay = 5;
 			void LoadWarningAOE(float x, float y)
 			{
-				if (mainmenu.bMainMenu == false && is_spawned == false)
+				if (mainmenu.isMainmenu == false && is_spawned == false)
 				{
 				
 					auto start_time = std::chrono::steady_clock::now();

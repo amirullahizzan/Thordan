@@ -3,7 +3,6 @@
 
 #include <Windows.h>
 
-#include "../MainMenu.h"
 #include "../StartGame.h"
 #include "../StageData.h"
 
@@ -21,11 +20,11 @@
 
 //MAKE a global var if you want to use it inside each Functions
 
-StartGame startgame;
-StartGame::Player player;
-StageData stagedata;
-StageData::AOECircle aoecircle(0,0,0);
 
+MainMenu mainmenu;
+GameTimer gametimer;
+StartGame::Player player;
+StageData::AOECircle aoecircle(0,0,0);
 
 int window_time = 0;
 int start_time = 0;
@@ -95,13 +94,13 @@ public:
 
 	int aoeduration = 3;
 	
-void CalculateAOE(float x, float y, int timespawn)
+void CalculateAOE(int x, int y, int timespawn)
 {
 	
 	DrawCircle(ax, ay, rad, ORANGE, 1, 1);
 	DrawCircle(bx, by, rad, RED, 1, 1);
 	
-	if (gametimer.tickseconds >= timespawn)
+	if (gametimer.tickms >= timespawn)
 	{
 		ax = x;
 		ay = y;
@@ -179,7 +178,7 @@ struct SkillBar
 
 void GameDraw()
 {
-	if (isMainmenu)
+	if (isMainMenu)
 	{
 		mainmenu.DrawMainMenu();
 

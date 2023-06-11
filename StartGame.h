@@ -1,5 +1,4 @@
 
-#include "MainMenu.h"
 #include "src/WinMain.h"
 #include <iostream>
 #include <thread>
@@ -11,9 +10,106 @@
 	bool isGame = false;
 	bool isMainMenu = false;
 
-extern MainMenu mainmenu;
+struct MainMenu
+{
+public:
+	bool isMainmenu = false;
 
-class StartGame //class can act as a script object
+	void InitMainMenu()
+	{
+		isMainmenu = true;
+	}
+
+	float fStartfontsize = 2;
+	int xdec = 0;
+	void DrawMainMenu()
+	{
+		if (isMainmenu == true)
+		{
+			float fBigfontsize = 4;
+			DrawExtendString(WINDOW_W / 2 - 270, 200, fBigfontsize, fBigfontsize, "Dragon's Reprise", YELLOW, 0);
+			DrawString(WINDOW_W / 2 - 150, 200 + 100, "Race to the end before the time is up", WHITE, 0);
+
+
+			DrawExtendString(WINDOW_W / 2 - 120 - xdec, 200 + 400, fStartfontsize, fStartfontsize, "Press Enter to Start", WHITE, 0);
+		}
+		else return;
+
+	}
+
+	void UpdateMainMenu()
+	{
+		extern bool isGame;
+		bool keyEnter = CheckHitKey(KEY_INPUT_ENTER);
+		if (keyEnter == TRUE && isMainmenu == true)
+		{
+			isMainmenu = false;
+
+			isGame = true;
+		}
+
+		ShakeText();
+	}
+
+	void ShakeText()
+	{
+		if (isMainmenu == true)
+		{
+
+			bool bFlag = false;
+			if (fStartfontsize < 2 && bFlag == false)
+			{
+				fStartfontsize = fStartfontsize + 0.01f;
+				xdec += 1;
+				if (fStartfontsize > 2)
+					bFlag = true;
+
+			}
+			else
+			{
+				bFlag = true;
+				fStartfontsize = 1.5;
+				xdec = 0;
+
+
+				if (fStartfontsize < 1 && bFlag == true)
+				{
+					bFlag = false;
+				}
+			}
+		}
+	}
+
+
+};
+
+
+struct GameTimer
+{
+	int tickms;
+	int tickseconds;
+
+	int MsTick()
+	{
+		tickms++;
+		return tickms;
+	}
+
+	void SecondsTick()
+	{
+		if (MsTick() > 60)
+		{
+			tickseconds++;
+			tickms = 0;
+		}
+	}
+
+
+
+};
+
+
+struct StartGame //class can act as a script object
 {
 public:
 	
@@ -23,8 +119,8 @@ public:
 	int hp = 0;
 	float bx = 255, by = 255; //data members
 	const int basespeed = 1;
-	float rad = 25;
-	float spawnx = WINDOW_W /2, spawny = WINDOW_H / 2 + 250; //data members
+	int rad = 25;
+	int spawnx = WINDOW_W /2, spawny = WINDOW_H / 2 + 250; //data members
 
 	//Player(float xpos, float ypos) : x(xpos), y(ypos) {} //Constructor
 
@@ -189,3 +285,9 @@ void StartStage(StageData& stagedata)
 
 
 };
+
+StartGame startgame;
+
+
+
+

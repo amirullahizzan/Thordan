@@ -79,6 +79,8 @@ public:
 
 };
 
+StageData stagedata;
+
 
 //STATIC FUNCTIONS.
 //void InvokeWarningAOE()
